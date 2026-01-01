@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Riska Ayu Meilani</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --bg: #0a0a0a; --white: #ffffff; --gray: #b0b0b0; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        .swiper { width: 100%; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(25%); }
+
+        .scroll-container { position: relative; z-index: 2; height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; }
+        section { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 10%; scroll-snap-align: start; }
+
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 300; letter-spacing: 4px; margin-bottom: 20px; }
+        .content-text { max-width: 650px; line-height: 1.8; font-size: 1.05rem; font-weight: 300; }
+        .highlight { font-style: italic; border-bottom: 1px solid #444; }
+
+        .fade-in { opacity: 0; transform: translateY(30px); transition: 1.2s all ease-out; }
+        .visible { opacity: 1; transform: translateY(0); }
+
+        .video-box { width: 100%; max-width: 260px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #333; }
+        .footer-sign { margin-top: 30px; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; }
+
+        #musicToggle { position: fixed; top: 20px; right: 20px; z-index: 999; cursor: pointer; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 50%; border: 1px solid #fff; line-height: 1; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.7rem; }
+            .content-text { font-size: 0.95rem; line-height: 1.6; }
+            section { padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="myAudio" loop>
+        <source src="{{ url_for('static', filename='musik.mp3') }}" type="audio/mpeg">
+    </audio>
+    <div id="musicToggle" onclick="toggleMusic()">🔈</div>
+
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            {% for photo in photos %}
+            <div class="swiper-slide"><img src="{{ url_for('static', filename=photo) }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="scroll-container">
+        <section><div class="fade-in"><h1>Hai Riska Ayu Meilani</h1><p class="content-text">Kamu orang yang asik saat diajak bicara, pengertian, lucu, dan sama kamu obrolan sederhana terasa menyenangkan.</p></div></section>
+
+        <section><div class="fade-in content-text"><p>Terima kasih untuk hampir satu tahun ini. Terima kasih karena sudah mau meluangkan waktu, dengerin ceritaku, dan hadir di saat aku butuh tempat untuk berbagi.</p><p class="highlight">Jujur, setelah ini aku ga tahu harus cerita ke siapa lagi, karena selama ini kamu adalah orang yang paling sering aku tuju.</p></div></section>
+
+        <section><div class="fade-in content-text"><p>Hampir satu tahun aku menjalaninya dengan perasaan yang sama menaruh harap, bertahan, dan berusaha sebaik mungkin.</p><p>Aku ga pernah menganggap waktu itu sia-sia, karena di dalamnya ada tawa, ada perhatian, dan ada perasaan yang benar-benar aku jaga.</p></div></section>
+
+        <section><div class="fade-in content-text"><p>Namun seiring berjalannya waktu, aku mulai sadar bahwa tidak semua hal bisa berjalan sesuai harapan.</p><p class="highlight">Dan di situlah aku belajar bahwa mempertahankan sesuatu sendirian hanya akan membuat semakin lelah.</p></div></section>
+
+        <section><div class="fade-in content-text"><p>Keputusan untuk berhenti mengejar ini bukan karena aku membenci atau menyesal pernah mengenalmu.</p><p>Aku hanya sedang belajar melepaskan sesuatu yang <span class="highlight">tidak bisa aku miliki sepenuhnya.</span></p></div></section>
+
+        <section><div class="fade-in content-text">
+            <video class="video-box" autoplay muted loop playsinline><source src="{{ url_for('static', filename='tiktok.mp4') }}" type="video/mp4"></video>
+            <p>Semoga kamu selalu dikelilingi hal-hal baik. Titip salam buat ibu ya.</p>
+            <p>Terimakasih ya Cantik, jaga adik-adik kamu yaa.</p>
+            <div class="footer-sign">Dari Ihsan :)</div>
+        </div></section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', { loop: true, effect: 'fade', autoplay: { delay: 4000 }, speed: 2000 });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        var audio = document.getElementById("myAudio");
+        var musicBtn = document.getElementById("musicToggle");
+        function toggleMusic() { 
+            if (audio.paused) { audio.play(); musicBtn.innerHTML = "🔊"; } 
+            else { audio.pause(); musicBtn.innerHTML = "🔈"; } 
+        }
+        ['touchstart', 'click', 'wheel'].forEach(evt => {
+            window.addEventListener(evt, () => { if(audio.paused) { audio.play(); musicBtn.innerHTML = "🔊"; }}, {once: true});
+        });
+    </script>
+</body>
+</html>
